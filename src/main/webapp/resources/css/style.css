@@ -1,0 +1,33 @@
+.ui-widget-content {
+    background: white repeat-x scroll 50% top !important;
+}
+
+.vertical-separator .ui-separator { 
+    background: #A8A8A8; 
+    border: solid;
+    border-color:  #66ccff !important;
+    width: 1px; 
+    clear: none; 
+    height: 18px; 
+    margin: 4px 6px 0; 
+    box-shadow: none; 
+}
+
+.ui-widget {
+    font-size: 90% !important;
+ }
+.ui-widget .ui-widget {
+    font-size: 100%;
+ }
+
+.preparedRecipesTable .ui-datatable-header {
+    height: 25px;
+}
+
+.ui-tabs-left > .ui-tabs-nav {
+    width: 15% !important;
+}
+
+.ui-tabs-left > .ui-tabs-panels {
+    width: 85% !important;
+}
