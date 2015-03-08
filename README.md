@@ -1,7 +1,5 @@
-spring-jsf-primefaces-template
+flatmatesapp
 ==========
-
-This is a template project using latest Spring 3.2, latest JSF and latest Primefaces. It's not just a hello world. It has some jsf templating in place, spring components, lombok annotation, primefaces interaction. 
 
 The tool is using the port 9996. You also need JAVA 7 for it to run!
 
