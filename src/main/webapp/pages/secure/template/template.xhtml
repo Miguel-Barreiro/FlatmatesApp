@@ -27,7 +27,7 @@
             </f:facet>
 
             <f:facet name="last">
-                <h:outputScript library="js" name="piquetteUpdater.js" target="head" />
+                <h:outputScript library="js" name="util.js" target="head" />
 
                 <!-- Piwik -->
                 <script type="text/javascript">
@@ -109,26 +109,11 @@
 
                             <p:commandButton value="Logout" action="#{sessionManager.logout()}" style="float: right; margin-right: 20px;" process="@this" ajax="false" />
                             <p:separator style="float: right;" />
-                            <p:commandButton value="Help" style="float: right;" icon="ui-icon-help" onclick="PF('helpDialog').show();" />
-                            <p:separator style="float: right;" />
-
-                            <p:commandButton disabled="true" value="#{sessionManager.safeModeEnabled ? 'Disable' : 'Enable'}" action="#{sessionManager.changeSafeModeStatus()}" style="float: right; margin-left: 5px;" >
-                                <p:confirm header="Confirmation"
-                                           message="Are you sure you want to #{sessionManager.safeModeEnabled ? 'disable' : 'enable'} Safe Mode? 
-                                           #{sessionManager.safeModeEnabled ? 'By disabling Safe Mode the update process will automatically and intelligently 
-                                             run the valid artifacts.' : ''}" icon="ui-icon-alert" />
-                            </p:commandButton>
-                            <p:outputLabel id="safeModeText" value="Safe Mode is #{sessionManager.safeModeEnabled ? 'enabled' : 'disabled'}: " 
-                                           style="float: right; padding-top: 5px; margin-right: 5px; color: #{sessionManager.safeModeEnabled ? 'green' : 'red'}" />
-                            <p:tooltip for="safeModeText" value="When Safe Mode is enabled the updating process will only check the live version and the environment versions for every recipe.&lt;br/&gt; 
-                                       After that you have the option to start each deploy manually." escape="false" />
                         </p:outputPanel>
 
                         <p:separator style="width: 99%; margin-top: 2px; float: left"/><br/>
-                        <img src="#{request.contextPath}/images/mad-fox-logo-small.gif" alt="mad fox logo" style="float: left; margin: 0px;" />
                         <h:panelGrid style="float: left" cellspacing="0" cellpadding="0" >
-                            <img src="#{request.contextPath}/images/mad-fox-word-small.gif" alt="mad fox write" />
-                            <p style="font-family: fantasy; margin: 0px">I'm mad so you don't have to be</p>
+                            <p style="font-family: fantasy; margin: 0px">FlatMatesApp</p>
                         </h:panelGrid>
                         <p:messages autoUpdate="true" globalOnly="true" style="float: right; margin-right: 1%" closable="true" />
                         <p:poll autoStart="true" async="true" interval="150" listener="#{funFacts.tellAStory()}" oncomplete="checkFunFactPoll()" widgetVar="funFactPollWar" />
@@ -139,23 +124,6 @@
                     <o:form prependId="false">
                         <p:menu style="width: 90%;" >
                             <p:menuitem id="dashboardMenuItem" value="Dashboard" url="/pages/secure/dashboard.xhtml" />
-                            <p:separator />
-                            <p:menuitem id="authMenuItem" value="Authorization" url="/pages/secure/authorization.xhtml" />
-                            <p:separator />
-                            <p:menuitem id="recManagMenuItem" value="Recipe Management" url="/pages/secure/recipeManagement.xhtml" />
-                            <p:separator />
-                            <p:menuitem id="envTroubleMenuItem" value="Inspect Envs" url="/pages/secure/envTroubleshooting.xhtml" />
-                            <p:separator />
-                            <p:menuitem id="gameStatusMenuItem" value="Game Status" url="/pages/secure/gameStatus.xhtml" />
-                            <p:separator />
-                            <p:menuitem id="scheduledTasksMenuItem" value="Scheduled Tasks" url="/pages/secure/scheduledTasks.xhtml" />
-                            <p:separator />
-                            <p:menuitem id="searchJobMenuItem" value="Search Jobs" url="/pages/secure/searchJobs.xhtml" />
-                            <p:separator />
-                            <p:menuitem id="feedbackMenuItem" value="Leave Feedback" url="/pages/secure/feedback.xhtml" />
-                            <p:separator />
-                            <p:separator />
-                            <p:menuitem value="TidyCat" url="http://gl02232m:8088/tidycat" style="color: red" target="_BLANK" />
                             <p:separator />
                             
                             <p:menuitem id="adminControlPanelItem" value="Control Panel" url="/pages/secure/admin/controlPanel.xhtml" style="color: green" rendered="#{sessionManager.hasRootRole()}" />
@@ -170,34 +138,7 @@
 
                 <p:layoutUnit position="south" size="25" closable="true" collapsible="true">
                     <h:outputText value="@iulian.dafinoiu - using piwik tracking" style="float: left; margin-left: 10px" />
-                    <p:outputLabel id="channelsConnctedLabel" value="#{updateChannelsGlobalManager.numberOfChannelsConnected()} channel(s) connected" style="float: right; margin-right: 10px" />
-                    <p:tooltip for="channelsConnctedLabel" value="#{updateChannelsGlobalManager.listChannelsAsString()}" />
                 </p:layoutUnit>
-
-                <p:dialog widgetVar="helpDialog" header="HELP" width="500" height="400" closeOnEscape="true" closable="true">
-                    <br />
-                    <h3>The cavalry is here! Worry no more!</h3>
-                    <br/>
-                    <h:outputText value="What can I help you with?" /> <br/><br/>
-
-                    <ul >
-                        <li style="margin-bottom: 5px;">
-                            <h:link value="Learn how to inspect environments" outcome="envTroubleshooting">
-                                <f:param name="startTutorial" value="true"/>
-                            </h:link>
-                        </li>
-                        <li style="margin-bottom: 5px;">
-                            <h:link value="Learn how to manage recipes and add custom ones" outcome="recipeManagement">
-                                <f:param name="startTutorial" value="true"/>
-                            </h:link>
-                        </li>
-                        <li style="margin-bottom: 5px;">
-                        <h:link value="Learn how to authorize environments (In progress)" outcome="envTroubleshooting" disabled="true">
-                                <f:param name="startTutorial" value="true"/>
-                            </h:link>
-                        </li>
-                    </ul>
-                </p:dialog>
 
             </p:layout>
 

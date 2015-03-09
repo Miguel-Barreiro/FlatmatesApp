@@ -18,10 +18,10 @@
         <o:form id="dashboardForm" style="width: 99%" prependId="false"> 
             <p:messages autoUpdate="true" severity="info,warn,error" for="dashboardMessages" id="dashboardMessages" closable="true" />
 
+            This is a fucking dashboard!
 
             <div style="clear:both" />
         </o:form>
-        <p:socket onMessage="handleMessage" channel="/liveVersion" widgetVar="liveVersionSocketWidget" autoConnect="false" />
 
         <script type="text/javascript">
             function handleMessage(data) {
