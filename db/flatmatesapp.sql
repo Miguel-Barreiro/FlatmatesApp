@@ -1,20 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.2.8.1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 09, 2015 at 11:40 PM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Host: localhost:8889
+-- Generation Time: Mar 10, 2015 at 06:40 PM
+-- Server version: 5.5.38
+-- PHP Version: 5.5.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `flatmatesapp`
@@ -26,7 +20,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `group`
 --
 
-CREATE TABLE IF NOT EXISTS `group` (
+CREATE TABLE `group` (
 `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(1000) NOT NULL
@@ -38,8 +32,9 @@ CREATE TABLE IF NOT EXISTS `group` (
 -- Table structure for table `item`
 --
 
-CREATE TABLE IF NOT EXISTS `item` (
+CREATE TABLE `item` (
 `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `id_spending` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `added_date` datetime DEFAULT NULL,
@@ -53,11 +48,11 @@ CREATE TABLE IF NOT EXISTS `item` (
 -- Table structure for table `payment`
 --
 
-CREATE TABLE IF NOT EXISTS `payment` (
+CREATE TABLE `payment` (
 `id` int(11) NOT NULL,
   `id_spending` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `payment_date` datetime 
+  `payment_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -66,11 +61,11 @@ CREATE TABLE IF NOT EXISTS `payment` (
 -- Table structure for table `spending`
 --
 
-CREATE TABLE IF NOT EXISTS `spending` (
+CREATE TABLE `spending` (
 `id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `spending_date` datetime NOT NULL 
+  `spending_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -79,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `spending` (
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
 `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `firstName` varchar(50) NOT NULL,
@@ -105,7 +100,7 @@ INSERT INTO `user` (`id`, `username`, `firstName`, `lastName`, `email`, `passwor
 -- Table structure for table `user_group`
 --
 
-CREATE TABLE IF NOT EXISTS `user_group` (
+CREATE TABLE `user_group` (
 `id` int(11) NOT NULL,
   `id_group` int(11) NOT NULL,
   `id_user` int(11) NOT NULL
@@ -215,7 +210,3 @@ ADD CONSTRAINT `spending_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`
 ALTER TABLE `user_group`
 ADD CONSTRAINT `user_group_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `user_group_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

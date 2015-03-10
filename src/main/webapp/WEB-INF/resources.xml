@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Resource id="flatmatesapp" type="javax.sql.DataSource">#Tue Mar 10 17:04:03 GMT 2015
+jdbcDriver=com.mysql.jdbc.Driver
+password=flatmatesapp
+userName=flatmatesapp
+jdbcUrl=jdbc\:mysql\://127.0.0.1\:8889/flatmatesapp?zeroDateTimeBehavior\=convertToNull
+</Resource>
+</resources>
