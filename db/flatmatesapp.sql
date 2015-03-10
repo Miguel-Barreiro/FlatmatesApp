@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
 `id` int(11) NOT NULL,
   `id_spending` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `payment_date` datetime DEFAULT CURRENT_TIMESTAMP
+  `payment_date` datetime 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `spending` (
 `id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `spending_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `spending_date` datetime NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
