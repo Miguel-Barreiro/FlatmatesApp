@@ -1,6 +1,5 @@
 package com.flatmatesapp.service;
 
-import com.flatmatesapp.model.Item;
 import com.flatmatesapp.vo.ItemVO;
 import java.io.Serializable;
 import java.util.List;
@@ -11,10 +10,10 @@ import java.util.List;
  */
 public interface ItemService extends Serializable {
     
-    public Item store(ItemVO item, Integer curUserId);
+    public ItemVO store(ItemVO item, Integer curUserId);
 
     public void remove(Integer idItem);
-    public Item find(Integer idItem);
-    public List<Item> findAll();
-    public List<Item> findAllForUser(Integer userId);
+    public ItemVO find(Integer idItem);
+    public List<ItemVO> findAll();
+    public List<ItemVO> findAllForUser(Integer userId);
 }

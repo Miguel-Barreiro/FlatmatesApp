@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,12 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "item")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
-    @NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id"),
-    @NamedQuery(name = "Item.findByAddedDate", query = "SELECT i FROM Item i WHERE i.addedDate = :addedDate"),
-    @NamedQuery(name = "Item.findByRecurrentInterval", query = "SELECT i FROM Item i WHERE i.recurrentInterval = :recurrentInterval"),
-    @NamedQuery(name = "Item.findByStartingDate", query = "SELECT i FROM Item i WHERE i.startingDate = :startingDate")})
 public class Item implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,10 +47,10 @@ public class Item implements Serializable {
     private Date startingDate;
     @JoinColumn(name = "id_spending", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Spending idSpending;
+    private Spending spending;
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private User idUser;
+    private User user;
 
     public Item() {
     }
@@ -107,20 +99,20 @@ public class Item implements Serializable {
         this.startingDate = startingDate;
     }
 
-    public Spending getIdSpending() {
-        return idSpending;
+    public Spending getSpending() {
+        return spending;
     }
 
-    public void setIdSpending(Spending idSpending) {
-        this.idSpending = idSpending;
+    public void setSpending(Spending spending) {
+        this.spending = spending;
     }
 
-    public User getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

@@ -1,14 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.8.1
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost:8889
--- Generation Time: Mar 10, 2015 at 06:40 PM
--- Server version: 5.5.38
--- PHP Version: 5.5.14
+-- Host: 127.0.0.1
+-- Generation Time: Mar 11, 2015 at 01:10 AM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `flatmatesapp`
@@ -20,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `group`
 --
 
-CREATE TABLE `group` (
+CREATE TABLE IF NOT EXISTS `group` (
 `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(1000) NOT NULL
@@ -32,15 +38,25 @@ CREATE TABLE `group` (
 -- Table structure for table `item`
 --
 
-CREATE TABLE `item` (
+CREATE TABLE IF NOT EXISTS `item` (
 `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `id_spending` int(11) NOT NULL,
+  `id_spending` int(11) DEFAULT NULL,
   `id_user` int(11) NOT NULL,
   `added_date` datetime DEFAULT NULL,
   `recurrent_interval` int(3) DEFAULT NULL,
   `starting_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`id`, `name`, `id_spending`, `id_user`, `added_date`, `recurrent_interval`, `starting_date`) VALUES
+(5, 'chair', NULL, 1, '2015-03-10 09:31:34', NULL, NULL),
+(6, 'knife', NULL, 1, '2015-03-10 04:30:24', 7, '2015-03-11'),
+(7, 'simpleShittyItem', NULL, 2, '2015-03-09 11:09:27', NULL, NULL),
+(8, 'recItem', NULL, 2, '2015-03-10 08:22:44', 30, '2015-03-12');
 
 -- --------------------------------------------------------
 
@@ -48,7 +64,7 @@ CREATE TABLE `item` (
 -- Table structure for table `payment`
 --
 
-CREATE TABLE `payment` (
+CREATE TABLE IF NOT EXISTS `payment` (
 `id` int(11) NOT NULL,
   `id_spending` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
@@ -61,7 +77,7 @@ CREATE TABLE `payment` (
 -- Table structure for table `spending`
 --
 
-CREATE TABLE `spending` (
+CREATE TABLE IF NOT EXISTS `spending` (
 `id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
@@ -74,7 +90,7 @@ CREATE TABLE `spending` (
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
 `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `firstName` varchar(50) NOT NULL,
@@ -91,7 +107,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `firstName`, `lastName`, `email`, `password`, `lastLogin`, `currentLogin`, `version`) VALUES
-(1, 'iulian', 'Iulian', 'Dafinoiu', 'dafinoiu_iulian@yahoo.com', '06195FDD599BADC7513BA3D380200B16B92C998D', '2015-03-08 16:32:25', '2015-03-09 22:16:24', 4),
+(1, 'iulian', 'Iulian', 'Dafinoiu', 'dafinoiu_iulian@yahoo.com', '06195FDD599BADC7513BA3D380200B16B92C998D', '2015-03-09 22:16:24', '2015-03-10 23:36:36', 4),
 (2, 'miguel', 'Miguel', 'Barreiro', 'miguel.barreiro.mail@gmail.com', '63D28DA1637A86D6464CA365A769174C0A87D89F', NULL, NULL, 1);
 
 -- --------------------------------------------------------
@@ -100,7 +116,7 @@ INSERT INTO `user` (`id`, `username`, `firstName`, `lastName`, `email`, `passwor
 -- Table structure for table `user_group`
 --
 
-CREATE TABLE `user_group` (
+CREATE TABLE IF NOT EXISTS `user_group` (
 `id` int(11) NOT NULL,
   `id_group` int(11) NOT NULL,
   `id_user` int(11) NOT NULL
@@ -159,7 +175,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `payment`
 --
@@ -210,3 +226,7 @@ ADD CONSTRAINT `spending_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`
 ALTER TABLE `user_group`
 ADD CONSTRAINT `user_group_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `user_group_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

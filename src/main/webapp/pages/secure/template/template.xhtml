@@ -125,6 +125,8 @@
                         <p:menu style="width: 90%;" >
                             <p:menuitem id="dashboardMenuItem" value="Dashboard" url="/pages/secure/dashboard.xhtml" />
                             <p:separator />
+                            <p:menuitem id="itemsMenuItem" value="Items" url="/pages/secure/item.xhtml" />
+                            <p:separator />
                             
                             <p:menuitem id="adminControlPanelItem" value="Control Panel" url="/pages/secure/admin/controlPanel.xhtml" style="color: green" rendered="#{sessionManager.hasRootRole()}" />
                             <p:separator />

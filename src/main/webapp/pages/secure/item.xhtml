@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition template="template/template.xhtml"   
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="content">
+        <o:onloadScript>
+            document.getElementById('itemsMenuItem').style.fontWeight = 'bold';
+            document.getElementById('itemsMenuItem').style.color = 'blue';
+        </o:onloadScript>
+        
+        <br/>
+        <div align="center">
+            <o:form id="itemForm" style="width: 90%"> 
+                <p:messages autoUpdate="true" severity="info,warn,error" for="itemMessages" closable="true" />
+
+                <p:outputLabel id="itemText" value="List my items: " style="margin-right: 5px;" />
+                <p:commandButton value="Go" action="#{itemController.listItems()}" update="@form" validateClient="true"
+                                 onstart="PF('itemListMask').block();" oncomplete="PF('itemListMask').unblock();" />
+                <br />
+                <br />
+                <br />
+
+                <pe:blockUI widgetVar="itemListMask" target="itemDT" centerY="true" >
+                    Thank you!<br />
+                    <p:graphicImage value="/images/searching.gif"/>
+                </pe:blockUI>
+
+                <p:dataTable id="itemDT" value="#{itemController.items}" var="item" style="width: 95%" >
+                    <f:facet name="header">
+                        <h:outputText value="Existing Items" style="margin-top: 5px" />
+                    </f:facet>
+                    <p:column headerText="Name" width="20%">
+                        #{item.name}
+                    </p:column>
+                    
+                    <p:column headerText="Added Date" width="30%">
+                        #{item.addedDate}
+                    </p:column>
+                    
+                    <p:column headerText="Rec Interval" width="15%">
+                        #{item.recurrentInterval}
+                    </p:column>
+
+                    <p:column headerText="Start Date" width="35%">
+                        #{item.startingDate}
+                    </p:column>
+                </p:dataTable>
+            </o:form>
+        </div>
+    </ui:define>
+</ui:composition>
+

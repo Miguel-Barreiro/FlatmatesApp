@@ -56,7 +56,7 @@ public class Spending implements Serializable {
     @Column(name = "spending_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date spendingDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSpending", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "spending", fetch = FetchType.LAZY)
     private List<Item> itemList;
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
