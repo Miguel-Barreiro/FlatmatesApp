@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
 public class User {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser", fetch = FetchType.LAZY)
+    private List<Chore> choreList;
     @Basic(optional = false)
     @NotNull
     @Column(name = "version")
@@ -231,6 +233,15 @@ public class User {
 
     public void setPaymentList(List<Payment> paymentList) {
         this.paymentList = paymentList;
+    }
+
+    @XmlTransient
+    public List<Chore> getChoreList() {
+        return choreList;
+    }
+
+    public void setChoreList(List<Chore> choreList) {
+        this.choreList = choreList;
     }
     
 }

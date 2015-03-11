@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,23 +22,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author iulian.dafinoiu
+ * @author Dafi
  */
 @Entity
-@Table(name = "item")
+@Table(name = "chore")
 @XmlRootElement
-public class Item implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "importance")
-    private String importance;
-    @Column(name = "due_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dueDate;
-    @JoinColumn(name = "id_group", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private FriendlyGroup idGroup;
+@NamedQueries({
+    @NamedQuery(name = "Chore.findAll", query = "SELECT c FROM Chore c"),
+    @NamedQuery(name = "Chore.findById", query = "SELECT c FROM Chore c WHERE c.id = :id"),
+    @NamedQuery(name = "Chore.findByName", query = "SELECT c FROM Chore c WHERE c.name = :name"),
+    @NamedQuery(name = "Chore.findByAddedDate", query = "SELECT c FROM Chore c WHERE c.addedDate = :addedDate"),
+    @NamedQuery(name = "Chore.findByRecurrentInterval", query = "SELECT c FROM Chore c WHERE c.recurrentInterval = :recurrentInterval"),
+    @NamedQuery(name = "Chore.findByStartingDate", query = "SELECT c FROM Chore c WHERE c.startingDate = :startingDate"),
+    @NamedQuery(name = "Chore.findByImportance", query = "SELECT c FROM Chore c WHERE c.importance = :importance"),
+    @NamedQuery(name = "Chore.findByDueDate", query = "SELECT c FROM Chore c WHERE c.dueDate = :dueDate")})
+public class Chore implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +45,7 @@ public class Item implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
     @Column(name = "added_date")
@@ -56,18 +56,32 @@ public class Item implements Serializable {
     @Column(name = "starting_date")
     @Temporal(TemporalType.DATE)
     private Date startingDate;
-    @JoinColumn(name = "id_spending", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Spending spending;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "importance")
+    private String importance;
+    @Column(name = "due_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dueDate;
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private User user;
+    private User idUser;
+    @JoinColumn(name = "id_group", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private FriendlyGroup idGroup;
 
-    public Item() {
+    public Chore() {
     }
 
-    public Item(Integer id) {
+    public Chore(Integer id) {
         this.id = id;
+    }
+
+    public Chore(Integer id, String name, String importance) {
+        this.id = id;
+        this.name = name;
+        this.importance = importance;
     }
 
     public Integer getId() {
@@ -110,47 +124,6 @@ public class Item implements Serializable {
         this.startingDate = startingDate;
     }
 
-    public Spending getSpending() {
-        return spending;
-    }
-
-    public void setSpending(Spending spending) {
-        this.spending = spending;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Item)) {
-            return false;
-        }
-        Item other = (Item) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.flatmatesapp.model.Item[ id=" + id + " ]";
-    }
-
     public String getImportance() {
         return importance;
     }
@@ -167,12 +140,45 @@ public class Item implements Serializable {
         this.dueDate = dueDate;
     }
 
+    public User getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(User idUser) {
+        this.idUser = idUser;
+    }
+
     public FriendlyGroup getIdGroup() {
         return idGroup;
     }
 
     public void setIdGroup(FriendlyGroup idGroup) {
         this.idGroup = idGroup;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Chore)) {
+            return false;
+        }
+        Chore other = (Chore) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.flatmatesapp.model.Chore[ id=" + id + " ]";
     }
     
 }

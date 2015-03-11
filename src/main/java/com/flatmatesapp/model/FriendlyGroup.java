@@ -32,6 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "FriendlyGroup.findByName", query = "SELECT f FROM FriendlyGroup f WHERE f.name = :name"),
     @NamedQuery(name = "FriendlyGroup.findByDescription", query = "SELECT f FROM FriendlyGroup f WHERE f.description = :description")})
 public class FriendlyGroup implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGroup", fetch = FetchType.LAZY)
+    private List<Item> itemList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGroup", fetch = FetchType.LAZY)
+    private List<Chore> choreList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -120,6 +124,24 @@ public class FriendlyGroup implements Serializable {
     @Override
     public String toString() {
         return "com.flatmatesapp.model.FriendlyGroup[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
+    }
+
+    @XmlTransient
+    public List<Chore> getChoreList() {
+        return choreList;
+    }
+
+    public void setChoreList(List<Chore> choreList) {
+        this.choreList = choreList;
     }
     
 }

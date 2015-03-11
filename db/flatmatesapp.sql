@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2015 at 01:10 AM
+-- Generation Time: Mar 12, 2015 at 12:57 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -23,6 +23,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chore`
+--
+
+CREATE TABLE IF NOT EXISTS `chore` (
+`id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_group` int(11) NOT NULL,
+  `added_date` datetime DEFAULT NULL,
+  `recurrent_interval` int(3) DEFAULT NULL,
+  `starting_date` date DEFAULT NULL,
+  `importance` enum('1','2','3','4','5') NOT NULL DEFAULT '3',
+  `due_date` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `group`
 --
 
@@ -30,7 +48,14 @@ CREATE TABLE IF NOT EXISTS `group` (
 `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(1000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `group`
+--
+
+INSERT INTO `group` (`id`, `name`, `description`) VALUES
+(1, 'Awesome House', 'this is the first group created in the next money maker fox house');
 
 -- --------------------------------------------------------
 
@@ -43,20 +68,23 @@ CREATE TABLE IF NOT EXISTS `item` (
   `name` varchar(100) NOT NULL,
   `id_spending` int(11) DEFAULT NULL,
   `id_user` int(11) NOT NULL,
+  `id_group` int(11) NOT NULL,
   `added_date` datetime DEFAULT NULL,
   `recurrent_interval` int(3) DEFAULT NULL,
-  `starting_date` date DEFAULT NULL
+  `starting_date` date DEFAULT NULL,
+  `importance` enum('1','2','3','4','5') NOT NULL DEFAULT '3',
+  `due_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`id`, `name`, `id_spending`, `id_user`, `added_date`, `recurrent_interval`, `starting_date`) VALUES
-(5, 'chair', NULL, 1, '2015-03-10 09:31:34', NULL, NULL),
-(6, 'knife', NULL, 1, '2015-03-10 04:30:24', 7, '2015-03-11'),
-(7, 'simpleShittyItem', NULL, 2, '2015-03-09 11:09:27', NULL, NULL),
-(8, 'recItem', NULL, 2, '2015-03-10 08:22:44', 30, '2015-03-12');
+INSERT INTO `item` (`id`, `name`, `id_spending`, `id_user`, `id_group`, `added_date`, `recurrent_interval`, `starting_date`, `importance`, `due_date`) VALUES
+(5, 'chair', NULL, 1, 1, '2015-03-10 09:31:34', NULL, NULL, '3', NULL),
+(6, 'knife', NULL, 1, 1, '2015-03-10 04:30:24', 7, '2015-03-11', '3', NULL),
+(7, 'simpleShittyItem', NULL, 2, 1, '2015-03-09 11:09:27', NULL, NULL, '3', NULL),
+(8, 'recItem', NULL, 2, 1, '2015-03-10 08:22:44', 30, '2015-03-12', '3', NULL);
 
 -- --------------------------------------------------------
 
@@ -127,6 +155,12 @@ CREATE TABLE IF NOT EXISTS `user_group` (
 --
 
 --
+-- Indexes for table `chore`
+--
+ALTER TABLE `chore`
+ ADD PRIMARY KEY (`id`), ADD KEY `id_spending` (`id_user`), ADD KEY `id_user` (`id_user`), ADD KEY `id_group` (`id_group`);
+
+--
 -- Indexes for table `group`
 --
 ALTER TABLE `group`
@@ -136,7 +170,7 @@ ALTER TABLE `group`
 -- Indexes for table `item`
 --
 ALTER TABLE `item`
- ADD PRIMARY KEY (`id`), ADD KEY `id_spending` (`id_spending`,`id_user`), ADD KEY `id_user` (`id_user`);
+ ADD PRIMARY KEY (`id`), ADD KEY `id_spending` (`id_spending`,`id_user`), ADD KEY `id_user` (`id_user`), ADD KEY `id_group` (`id_group`);
 
 --
 -- Indexes for table `payment`
@@ -167,10 +201,15 @@ ALTER TABLE `user_group`
 --
 
 --
+-- AUTO_INCREMENT for table `chore`
+--
+ALTER TABLE `chore`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
 -- AUTO_INCREMENT for table `group`
 --
 ALTER TABLE `group`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `item`
 --
@@ -201,11 +240,19 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 
 --
+-- Constraints for table `chore`
+--
+ALTER TABLE `chore`
+ADD CONSTRAINT `chore_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `chore_ibfk_2` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `item`
 --
 ALTER TABLE `item`
 ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`id_spending`) REFERENCES `spending` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `item_ibfk_3` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `payment`
